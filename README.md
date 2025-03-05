@@ -1,3 +1,7 @@
+<div align="center">
+  <img src="ubi-v2.png" alt="UBI v2" width="250px" />
+</div>
+
 # A Minimalist Framework for Equitable Universal Basic Income
 
 *March 2025*
