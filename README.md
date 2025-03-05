@@ -1,8 +1,4 @@
-<div align="center">
-  <img src="ubi-v2.png" alt="UBI v2" width="250px" />
-</div>
-
-# A Minimalist Framework for Equitable Universal Basic Income
+# A Minimalist Framework for Equitable UBI
 
 *March 2025*
 
@@ -736,31 +732,316 @@ Most importantly, we're not attempting to peg the UBI token to a fixed price lik
 
 This approach matters because it creates a bridge between the internal UBI economy and the broader crypto ecosystem. By connecting UBI token value to productive external assets, we create sustainable economic support without requiring continuous charitable donations or government funding. This self-sustaining approach is essential for a truly decentralized UBI system that can operate at global scale without centralized backing.
 
-### 6.6 Implementation Strategy
+### 6.7 AI-Driven Demand Generation
 
-Based on the experience with Proof of Humanity's UBI token, we recommend a phased implementation approach:
+Beyond the yield-backed mechanism, we can leverage artificial intelligence to create structural demand for the UBI token. By integrating AI services that exclusively accept UBI tokens as payment, we create genuine utility that drives adoption and value.
 
-1. **Initial Vaults**: Deploy basic ETH vaults using established yield strategies (Aave, Compound) with conservative parameters.
+This isn't merely theoretical—AI systems are rapidly becoming essential infrastructure for knowledge work, creativity, and decision-making. By positioning UBI tokens as the primary medium of exchange for these services, we create lasting demand tied to productive use cases.
 
-2. **Diversification**: Gradually introduce multiple vault options with different asset types (stablecoins, other cryptocurrencies) and yield strategies.
+Several implementation strategies stand out:
 
-3. **Parameter Optimization**: Use real-world data to optimize buyback percentages, reserve ratios, and other parameters for maximum stability.
+1. **Protocol-Owned AI Infrastructure**: The DAO can allocate resources to develop or license specialized AI models that exclusively accept UBI tokens. These could include:
 
-4. **Protocol-Owned Liquidity**: Allocate a portion of reserves to establish deep liquidity pools, further stabilizing the token price.
+   - Content moderation systems for decentralized platforms
+   - Enhanced identity verification to strengthen the proof-of-humanity system
+   - Personalized economic advice to help participants optimize their token usage
+   - Creative tools for media generation, coding assistance, and design
 
-This progressive approach allows us to build on proven mechanisms while adapting to market conditions and community needs. The goal is not to create a speculative asset, but a stable, usable currency that maintains meaningful purchasing power for UBI recipients while naturally resisting concentration and hoarding.
+2. **Token-Gated AI Access**: Partner with existing AI providers to create premium tiers accessible only through UBI tokens. This creates a direct link between the token and valuable services while generating continuous buy pressure.
 
-## 7. Why This Matters
+3. **AI-Powered Marketplace**: Develop a decentralized marketplace where verified humans can offer AI-enhanced services to each other, with UBI tokens as the exclusive medium of exchange. This creates economic velocity within the system while fostering community development.
 
-The significance of this system extends far beyond providing supplemental income. By creating a truly equitable distribution mechanism with built-in resistance to manipulation, we establish a foundation for new kinds of economic relationships.
+The key insight is that AI services represent a rapidly growing sector with high margins and scalable economics. By capturing even a small portion of this value flow for the UBI ecosystem, we create sustainable demand that counterbalances the continuous token issuance.
 
-In traditional and cryptocurrency economies, wealth inevitably concentrates over time. This is not because of corruption or bad actors—it's a mathematical inevitability in systems where money can earn money without bound. Our approach directly addresses this fundamental flaw.
+Implementation example for AI service integration:
 
-By creating a UBI system where continuous distribution is balanced by demurrage, we establish a circular economy that rewards participation and contribution rather than accumulation. The value flows like water rather than pooling in stagnant reservoirs.
+```solidity
+// AI Service Registry with UBI payment integration
+contract AIServiceRegistry {
+    IUBI public ubiToken;
+    
+    // Registry of approved AI services
+    mapping(address => ServiceInfo) public services;
+    
+    struct ServiceInfo {
+        string name;
+        string description;
+        uint256 pricePerUnit;
+        uint256 totalRevenue;
+        bool active;
+    }
+    
+    constructor(address _ubiToken) {
+        ubiToken = IUBI(_ubiToken);
+    }
+    
+    // Register a new AI service
+    function registerService(
+        string calldata name,
+        string calldata description,
+        uint256 pricePerUnit
+    ) external {
+        require(pricePerUnit > 0, "Price must be positive");
+        
+        services[msg.sender] = ServiceInfo({
+            name: name,
+            description: description,
+            pricePerUnit: pricePerUnit,
+            totalRevenue: 0,
+            active: true
+        });
+        
+        emit ServiceRegistered(msg.sender, name, pricePerUnit);
+    }
+    
+    // Pay for AI service using UBI tokens
+    function payForService(address serviceProvider, uint256 units) external {
+        ServiceInfo storage service = services[serviceProvider];
+        require(service.active, "Service not active");
+        
+        uint256 cost = service.pricePerUnit * units;
+        
+        // Transfer UBI tokens from user to service provider
+        require(ubiToken.transferFrom(msg.sender, serviceProvider, cost), "Payment failed");
+        
+        // Record the revenue
+        service.totalRevenue += cost;
+        
+        emit ServicePayment(msg.sender, serviceProvider, units, cost);
+    }
+}
+```
 
-More importantly, by minimizing the identity verification requirements, we make the system accessible to those most in need of economic inclusion—people without government IDs, banking relationships, or extensive digital footprints.
+What makes this approach particularly powerful is the natural alignment between UBI distribution and AI services. As AI increases productivity and potentially displaces certain forms of labor, UBI becomes more socially necessary. By directly linking UBI tokens to AI service access, we create a built-in mechanism where technological progress directly funds its social safety net.
 
-## 8. Conclusion: A New Model for Digital Exchange
+Real-world examples support this approach. Consider how platforms like OpenAI have created massive demand for their tokens/credits as payment for AI services. By building similar functionality into the UBI ecosystem, we can generate sustainable demand that grows with the advancement of AI capabilities.
+
+The economic impact is substantial:
+
+- **Reduced Selling Pressure**: When UBI recipients can access valuable services directly with their tokens, they're less likely to immediately convert to other currencies.
+- **External Buy Pressure**: Non-recipients who want to access these services must purchase UBI tokens, creating consistent market demand.
+- **Value Retention**: As the AI services become more valuable, the demand for UBI tokens increases proportionally, helping the token retain value despite continuous issuance.
+
+This mechanism creates a virtuous cycle where the token gains utility beyond its redistribution function, becoming an essential medium of exchange for next-generation services.
+
+## 7. Minimal Governance Design
+
+The success of this system depends on minimizing governance requirements while ensuring adaptability. Traditional governance mechanisms often introduce centralization risks and political capture. Our approach implements what I call "algorithmic governance"—where most decisions are handled by predefined formulas and feedback mechanisms rather than human intervention.
+
+### 7.1 Governance Minimization Principles
+
+The protocol follows several core principles to reduce governance requirements:
+
+1. **Algorithmic Adjustments**: Parameters like demurrage rates, UBI multipliers, and redistribution formulas should adjust automatically based on system metrics rather than requiring votes.
+
+2. **Bounded Parameters**: When governance is needed, votes should determine parameters within pre-defined safe ranges rather than allowing unlimited changes.
+
+3. **Governance Derisk Schedule**: The system should become progressively more difficult to modify over time, gradually ossifying into a stable, predictable protocol.
+
+4. **Upgrade Minimization**: Critical mechanisms should be designed for long-term stability with infrequent upgrades rather than constant tweaking.
+
+5. **Separate Technical and Value Concerns**: Technical upgrades should be handled differently from parameter adjustments, with different thresholds and processes.
+
+These principles allow the system to operate with minimal intervention while maintaining adaptability to changing conditions.
+
+### 7.2 Algorithmic Feedback Mechanisms
+
+Rather than requiring active governance, many protocol parameters are adjusted automatically through mathematical formulas:
+
+```solidity
+// Example of algorithmic feedback for demurrage scaling factor
+function calculateOptimalScalingFactor() public view returns (uint256) {
+    // Get current system metrics
+    uint256 giniCoefficient = measureGiniCoefficient();
+    uint256 circulatingSupply = ubiToken.totalSupply();
+    uint256 activationRate = getActivationRate(); // % of eligible users actively using system
+    
+    // Base scaling factor (default 5)
+    uint256 scalingFactor = 5;
+    
+    // Adjust based on wealth concentration
+    // Higher Gini coefficient = higher scaling factor to counteract concentration
+    if (giniCoefficient > 30) { // 0.3 Gini coefficient
+        uint256 giniAdjustment = (giniCoefficient - 30) / 10;
+        scalingFactor += giniAdjustment;
+    }
+    
+    // Adjust based on activation rate
+    // Lower activation = lower scaling factor to attract participation
+    if (activationRate < 7000) { // 70% activation
+        uint256 activationAdjustment = (7000 - activationRate) / 1000;
+        if (scalingFactor > activationAdjustment) {
+            scalingFactor -= activationAdjustment;
+        } else {
+            scalingFactor = 1; // Minimum scaling factor
+        }
+    }
+    
+    // Ensure scaling factor stays within bounds
+    if (scalingFactor > 10) return 10; // Maximum scaling factor
+    if (scalingFactor < 1) return 1;   // Minimum scaling factor
+    
+    return scalingFactor;
+}
+```
+
+This approach creates a self-regulating system where:
+
+- Economic parameters adapt to wealth concentration metrics
+- Incentives adjust based on participation rates
+- Technical parameters respond to load and performance metrics
+
+By encoding these feedback loops directly into the protocol, we minimize the need for contentious governance votes while ensuring the system remains responsive to changing conditions.
+
+### 7.3 Quadratic Voting and Delegation
+
+For decisions that still require governance, we implement a quadratic voting system that leverages the Sybil-resistant properties of our identity verification:
+
+```solidity
+// Quadratic voting implementation
+contract QuadraticGovernance {
+    // Registry of verified humans
+    IProofOfHumanity public humanity;
+    
+    // Proposals indexed by ID
+    mapping(uint256 => Proposal) public proposals;
+    
+    // Delegations: delegator => delegate
+    mapping(address => address) public delegations;
+    
+    // Delegation weighting with quadratic formula
+    // The more people who delegate to you, the more weight each delegation carries
+    function getDelegationWeight(address delegate) public view returns (uint256) {
+        // Count delegations to this address
+        uint256 delegationCount = countDelegationsTo(delegate);
+        
+        // Apply quadratic formula: sqrt(delegationCount) * SCALE_FACTOR
+        return sqrt(delegationCount * 1e18);
+    }
+    
+    // Cast a vote with quadratic weighting
+    function vote(uint256 proposalId, bool support) external {
+        require(humanity.isHuman(msg.sender), "Only verified humans can vote");
+        
+        // Check if user has delegated their vote
+        if (delegations[msg.sender] != address(0)) {
+            revert("Vote delegated");
+        }
+        
+        // Calculate vote weight with quadratic delegation bonus
+        uint256 weight = 1e18 + getDelegationWeight(msg.sender);
+        
+        // Record the vote
+        if (support) {
+            proposals[proposalId].forVotes += weight;
+        } else {
+            proposals[proposalId].againstVotes += weight;
+        }
+        
+        proposals[proposalId].hasVoted[msg.sender] = true;
+    }
+    
+    // Delegate voting power to another address
+    function delegate(address to) external {
+        require(humanity.isHuman(msg.sender), "Only verified humans can delegate");
+        require(humanity.isHuman(to), "Can only delegate to verified humans");
+        
+        delegations[msg.sender] = to;
+        emit Delegation(msg.sender, to);
+    }
+}
+```
+
+This system has several important properties:
+
+1. **One-Person-One-Vote Base**: Each verified human has equal basic voting power, ensuring democratic representation.
+
+2. **Quadratic Delegation**: When users delegate their votes, the delegate's power scales with the square root of their delegation count, rewarding consensus-building while preventing extreme concentration of power.
+
+3. **Topic-Specific Delegation**: Users can delegate differently for different types of decisions, allowing expertise-based governance.
+
+4. **Direct Participation Option**: Any user can choose to vote directly on any proposal, regardless of any prior delegations.
+
+This governance system balances the efficiency of delegation with the equity of direct democracy, all while leveraging the Sybil-resistance of our identity verification to prevent vote manipulation.
+
+### 7.4 Governance Scope and Tiered Authority
+
+Not all protocol aspects require the same level of governance oversight. We implement a tiered approach:
+
+1. **No Governance (Algorithmic)**: 
+   - UBI drip rate adjustments
+   - Demurrage curve parameters
+   - Redistribution calculations
+
+2. **Light Governance (Parameter Adjustment)**:
+   - Vault buyback percentages
+   - Transaction fee rates
+   - Balance cap thresholds
+
+3. **Heavy Governance (Protocol Changes)**:
+   - Verification mechanism upgrades
+   - Economic model modifications
+   - Smart contract upgrades
+
+Each tier has different quorum requirements, approval thresholds, and timelock periods, ensuring that more significant changes require broader consensus and longer consideration.
+
+Implementation example:
+
+```solidity
+// Governance tier definitions
+enum GovernanceTier {
+    Parameter,  // Simple parameter adjustments
+    Contract,   // Smart contract upgrades
+    Core        // Fundamental protocol changes
+}
+
+// Different requirements per tier
+function getRequirements(GovernanceTier tier) public pure returns (
+    uint256 quorum,
+    uint256 approval,
+    uint256 timelock
+) {
+    if (tier == GovernanceTier.Parameter) {
+        return (10, 60, 2 days);       // 10% quorum, 60% approval, 2 day timelock
+    } else if (tier == GovernanceTier.Contract) {
+        return (25, 66, 7 days);       // 25% quorum, 66% approval, 7 day timelock
+    } else if (tier == GovernanceTier.Core) {
+        return (40, 75, 30 days);      // 40% quorum, 75% approval, 30 day timelock
+    }
+}
+```
+
+This tiered approach limits governance to where it's truly needed while ensuring appropriate safeguards for different types of decisions.
+
+### 7.5 Progressive Decentralization
+
+To balance initial development needs with long-term decentralization, we implement a progressive transition of governance powers:
+
+1. **Bootstrap Phase**: Core team maintains ability to rapidly adjust parameters and fix critical issues.
+
+2. **Stabilization Phase**: Governance transitions to community with training wheels (vetoes for extreme cases).
+
+3. **Maturity Phase**: Full community governance with high thresholds for fundamental changes.
+
+4. **Ossification Phase**: Core protocol becomes nearly immutable, with governance limited to peripheral systems.
+
+Each phase has clear, predefined triggers for transition, ensuring the governance evolves with the protocol rather than remaining centralized indefinitely.
+
+#### Contrarian Perspective
+
+Governance minimalists will argue that even this approach has too much governance. They might ask: Why not make all parameters algorithmic and remove human governance entirely? Others from traditional governance backgrounds will argue the opposite—that complex economic systems need active management and cannot be fully automated.
+
+There are also legitimate concerns about whether quadratic voting truly solves plutocracy. While it prevents direct vote buying, sophisticated actors might still find ways to gain disproportionate influence through social engineering or proxy voting schemes.
+
+#### Why This Matters
+
+The tension between governance minimization and adaptability is at the heart of decentralized systems. Our approach strikes a balance by encoding as many decisions as possible into algorithmic feedback mechanisms while preserving community governance for truly fundamental decisions.
+
+The quadratic delegation system matters because it creates a middle path between pure direct democracy (which can be inefficient and susceptible to low participation) and representative systems (which can concentrate power). By combining one-person-one-vote principles with delegation weighted toward consensus builders, we create a system that benefits from expertise while remaining fundamentally democratic.
+
+This careful governance design ensures the protocol can evolve without being captured by special interests or becoming ossified in its initial design. The goal is a system that mostly runs itself through well-designed feedback mechanisms, with human governance as a backstop rather than a regular requirement.
+
+## 9. Conclusion: A New Model for Digital Exchange
 
 The framework presented here offers a radical reimagining of how digital economic systems can function. By shifting the burden of fairness from identity verification to economic design, we create a system that is both more accessible and more resistant to manipulation.
 
